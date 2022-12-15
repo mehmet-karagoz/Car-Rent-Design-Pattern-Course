@@ -1,4 +1,4 @@
-namespace CarRenting.Host
+namespace WebApplication1
 {
     public class WeatherForecast
     {

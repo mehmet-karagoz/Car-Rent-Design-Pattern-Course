@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace CarRenting.Host.Controllers
+namespace WebApplication1.Controllers
 {
     [ApiController]
     [Route("[controller]")]
