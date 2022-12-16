@@ -2,6 +2,7 @@ using CarRenting.Host.Common;
 using CarRenting.Host.Entities;
 using CarRenting.Host.Executor;
 using CarRenting.Host.Features.Vehicles.Commands.CreateCar;
+using CarRenting.Host.Features.Vehicles.Commands.DeleteCarById;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -42,5 +43,12 @@ namespace CarRenting.Host.Controllers
             return new ActionResult<string>("Successfully created.");
         }
 
+        [HttpDelete("{id}")]
+        public ActionResult<string> DeleteCar(int id)
+        {
+            DeleteCarByIdCommand command = new DeleteCarByIdCommand(id);
+            CommandExecutor.Execute(command);
+            return new ActionResult<string>("Successfully deleted.");
+        }
     }
 }

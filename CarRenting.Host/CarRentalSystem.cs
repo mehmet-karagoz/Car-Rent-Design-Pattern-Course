@@ -1,6 +1,6 @@
 ﻿using CarRenting.Host.Entities;
 
-namespace CarRenting.Host.Executor
+namespace CarRenting.Host
 {
     public static class CarRentalSystem
     {

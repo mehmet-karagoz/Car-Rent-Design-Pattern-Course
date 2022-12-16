@@ -1,5 +1,4 @@
 ﻿using CarRenting.Host.Entities;
-using CarRenting.Host.Executor;
 using CarRenting.Host.Interfaces;
 
 namespace CarRenting.Host.Features.Vehicles.Commands.CreateCar
@@ -22,11 +21,13 @@ namespace CarRenting.Host.Features.Vehicles.Commands.CreateCar
         public void Execute()
         {
             // Create a new car with the specified make, model, and year
-            Car car = new Car();
-            car.Id = CarRentalSystem.GetCars().Count() != 0 ? CarRentalSystem.GetCars().Last().Id + 1 : 0;
-            car.Make = Make;
-            car.Model = Model;
-            car.Year = Year;
+            Car car = new Car
+            {
+                Id = CarRentalSystem.GetCars().Any() ? CarRentalSystem.GetCars().Last().Id + 1 : 0,
+                Make = Make,
+                Model = Model,
+                Year = Year
+            };
             // Add the new car to the car rental system
             CarRentalSystem.AddCar(car);
         }
