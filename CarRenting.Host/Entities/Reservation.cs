@@ -1,4 +1,5 @@
 ﻿using CarRenting.Host.Common;
+using CarRenting.Host.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Entities
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public virtual BaseVehicle Vehicle { get; set; } // reserved car
+        public virtual Car car { get; set; } // reserved car
         public virtual Customer Customer { get; set; } // customer who reserved the car
         public double RentalPrice { get; set; }
     }

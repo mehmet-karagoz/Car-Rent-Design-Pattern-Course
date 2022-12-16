@@ -2,23 +2,25 @@
 
 namespace CarRenting.Host.Entities
 {
-    public class Car : BaseVehicle
+    public class Car : BaseEntity
     {
-        public int NumberOfDoors { get; set; }
 
-        public override void Rent()
+        public string Make { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+
+
+        public void Rent()
         {
-            // code to rent a car
         }
-
-        public override void Return()
+        public  void Return()
         {
-           // 
+
         }
 
         public override string? ToString()
         {
-            return base.ToString() + ", " + NumberOfDoors;
+            return base.ToString() + ", " + Make + ", " + Model + ", " + Year;
         }
     }
 }

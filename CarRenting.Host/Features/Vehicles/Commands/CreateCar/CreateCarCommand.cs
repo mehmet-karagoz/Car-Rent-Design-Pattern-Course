@@ -27,8 +27,6 @@ namespace CarRenting.Host.Features.Vehicles.Commands.CreateCar
             car.Make = Make;
             car.Model = Model;
             car.Year = Year;
-            car.NumberOfDoors= NumberOfDoors;
-            Console.WriteLine(car);
             // Add the new car to the car rental system
             CarRentalSystem.AddCar(car);
         }
