@@ -10,8 +10,15 @@ namespace CarRenting.Host.Common
     {
         public string Make { get; set; }
         public string Model { get; set; }
+        public int Year { get; set; }
+
 
         public abstract void Rent();
         public abstract void Return();
+
+        public override string? ToString()
+        {
+            return base.ToString() + ", " +  Make +  ", " + Model + ", " + Year;
+        }
     }
 }

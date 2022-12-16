@@ -9,5 +9,10 @@ namespace CarRenting.Host.Common
     public abstract class BaseEntity
     {
         public virtual int Id { get; set; }
+
+        public override string? ToString()
+        {
+            return "ID: " + Id;
+        }
     }
 }

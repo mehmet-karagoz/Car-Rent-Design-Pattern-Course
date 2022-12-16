@@ -15,5 +15,10 @@ namespace CarRenting.Host.Entities
         {
            // 
         }
+
+        public override string? ToString()
+        {
+            return base.ToString() + ", " + NumberOfDoors;
+        }
     }
 }

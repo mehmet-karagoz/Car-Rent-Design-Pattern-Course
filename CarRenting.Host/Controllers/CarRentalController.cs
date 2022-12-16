@@ -1,34 +1,23 @@
 using CarRenting.Host.Common;
 using CarRenting.Host.Executor;
-using CarRenting.Host.Features.Vehicles.Commands.RentVehicle;
-using CarRenting.Host.Features.Vehicles.Commands.ReturnVehicle;
+using CarRenting.Host.Features.Vehicles.Commands.CreateCar;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace CarRenting.Host.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CarRentalController
+    public class CarRentalController : ControllerBase
     {
-        private readonly CommandExecutor _commandExecutor;
 
-        public CarRentalController(CommandExecutor commandExecutor)
+
+        [HttpPost]
+        public void CreateCar([FromBody] CreateCarCommand command)
         {
-            _commandExecutor = commandExecutor;
+               
+            CommandExecutor.Execute(command);
         }
 
-        [HttpPost("RentVehicle")]
-        public void RentVehicle(BaseVehicle baseVehicle)
-        {
-            RentVehicleCommand command = new RentVehicleCommand(baseVehicle);
-            _commandExecutor.ExecuteCommand(command);
-        }
-
-        [HttpPost("ReturnVehicle")]
-        public void ReturnVehicle(BaseVehicle baseVehicle)
-        {
-            ReturnVehicleCommand command = new ReturnVehicleCommand(baseVehicle);
-            _commandExecutor.ExecuteCommand(command);
-        }
     }
 }
