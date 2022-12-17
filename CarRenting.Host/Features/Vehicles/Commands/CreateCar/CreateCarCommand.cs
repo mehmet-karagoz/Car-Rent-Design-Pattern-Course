@@ -23,13 +23,13 @@ namespace CarRenting.Host.Features.Vehicles.Commands.CreateCar
             // Create a new car with the specified make, model, and year
             Car car = new Car
             {
-                Id = CarRentalSystem.GetCars().Any() ? CarRentalSystem.GetCars().Last().Id + 1 : 0,
+                Id = CarRentalSystem.Instance.GetCars().Any() ? CarRentalSystem.Instance.GetCars().Last().Id + 1 : 0,
                 Make = Make,
                 Model = Model,
                 Year = Year
             };
             // Add the new car to the car rental system
-            CarRentalSystem.AddCar(car);
+            CarRentalSystem.Instance.AddCar(car);
         }
     }
 }

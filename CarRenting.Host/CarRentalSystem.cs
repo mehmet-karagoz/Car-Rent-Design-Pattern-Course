@@ -2,21 +2,33 @@
 
 namespace CarRenting.Host
 {
-    public static class CarRentalSystem
+    public  class CarRentalSystem
     {
         private static readonly List<Car> _cars = new List<Car>();
-
-        public static void AddCar(Car car)
+        private static CarRentalSystem? _instance;
+        private CarRentalSystem() { }
+        public static CarRentalSystem Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new CarRentalSystem();
+                }
+                return _instance;
+            }
+        }
+        public  void AddCar(Car car)
         {
             _cars.Add(car);
         }
 
-        public static void RemoveCar(Car car)
+        public  void RemoveCar(Car car)
         {
             _cars.Remove(car);
         }
 
-        public static IEnumerable<Car> GetCars()
+        public  IEnumerable<Car> GetCars()
         {
             return _cars;
         }

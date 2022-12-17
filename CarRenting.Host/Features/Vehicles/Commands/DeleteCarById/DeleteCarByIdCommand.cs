@@ -14,12 +14,12 @@ namespace CarRenting.Host.Features.Vehicles.Commands.DeleteCarById
 
         public void Execute()
         {
-            Car? car = CarRentalSystem.GetCars().FirstOrDefault(c => c.Id == Id);
+            Car? car = CarRentalSystem.Instance.GetCars().FirstOrDefault(c => c.Id == Id);
             if (car == null)
             {
                 throw new Exception("Car not found.");
             }
-            CarRentalSystem.RemoveCar(car);
+            CarRentalSystem.Instance.RemoveCar(car);
         }
     }
 }

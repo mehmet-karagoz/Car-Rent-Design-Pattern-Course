@@ -16,7 +16,7 @@ namespace CarRenting.Host.Controllers
         [HttpGet("{id}")]
         public ActionResult<Car> GetCar(int id)
         {
-            var car = CarRentalSystem.GetCars().FirstOrDefault(c => c.Id == id);
+            var car = CarRentalSystem.Instance.GetCars().FirstOrDefault(c => c.Id == id);
             if (car == null)
             {
                 return NotFound();
@@ -27,7 +27,7 @@ namespace CarRenting.Host.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Car>> GetAllCars()
         {
-            var cars = CarRentalSystem.GetCars();
+            var cars = CarRentalSystem.Instance.GetCars();
             if (cars == null)
             {
                 return NotFound();
