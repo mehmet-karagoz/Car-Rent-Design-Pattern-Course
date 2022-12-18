@@ -8,15 +8,7 @@ namespace CarRenting.Host.Entities
         public string Make { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
-
-
-        public void Rent()
-        {
-        }
-        public  void Return()
-        {
-
-        }
+        public bool IsAvailable { get; set; }
 
         public override string? ToString()
         {

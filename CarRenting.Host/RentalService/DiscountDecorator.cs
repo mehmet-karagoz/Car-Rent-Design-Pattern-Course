@@ -1,5 +1,6 @@
 ﻿using CarRenting.Host.Entities;
 using CarRenting.Host.Interfaces;
+using Entities;
 
 namespace CarRenting.Host.RentalService
 {
@@ -17,12 +18,12 @@ namespace CarRenting.Host.RentalService
             return _decoratedService.GetAvailableCars();
         }
 
-        public RentalAgreement RentCar(int carId, DateTime startDate, DateTime endDate)
+        public RentalAgreement RentCar(int carId, DateTime startDate, DateTime endDate, Customer customer)
         {
             // Calculate the discount amount
             // ...
-            var discountAmount = .2;
-            RentalAgreement agreement = _decoratedService.RentCar(carId, startDate, endDate);
+            var discountAmount = 2;
+            RentalAgreement agreement = _decoratedService.RentCar(carId, startDate, endDate,customer);
             agreement.DiscountAmount = discountAmount;
             return agreement;
         }
