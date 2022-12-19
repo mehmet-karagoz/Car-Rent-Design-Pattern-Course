@@ -1,10 +1,11 @@
-﻿using CarRenting.Host.Entities;
+﻿using CarRenting.Host.Common;
+using CarRenting.Host.Entities;
 using CarRenting.Host.Interfaces;
 using Entities;
 
 namespace CarRenting.Host.Features.Customers.Commands.DeleteCustomerById
 {
-    public class DeleteCustomerByIdCommand : ICommand
+    public class DeleteCustomerByIdCommand : ICommand<int>
     {
         public int Id { get; set; }
 
@@ -13,14 +14,16 @@ namespace CarRenting.Host.Features.Customers.Commands.DeleteCustomerById
             Id = id;
         }
 
-        public void Execute()
+        public Response<int> Execute()
         {
             Customer? customer = CarRentalSystem.Instance.GetCustomers().FirstOrDefault(c => c.Id == Id);
             if (customer == null)
             {
-                throw new Exception("Customer not found.");
+                return new Response<int>("Customer not found.");
             }
             CarRentalSystem.Instance.RemoveCustomer(customer);
+
+            return new Response<int>(customer.Id);
         }
     }
 }

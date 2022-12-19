@@ -1,4 +1,5 @@
-﻿using CarRenting.Host.Entities;
+﻿using CarRenting.Host.Common;
+using CarRenting.Host.Entities;
 using CarRenting.Host.Interfaces;
 using Entities;
 using System.Net;
@@ -7,7 +8,7 @@ using System.Xml.Linq;
 
 namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
 {
-    public class CreateCustomerCommand : ICommand
+    public class CreateCustomerCommand : ICommand<int>
     {
         public string Name { get; set; }
         public string Email { get; set; }
@@ -22,7 +23,7 @@ namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
             Address = address;
         }
 
-        public void Execute()
+        public Response<int> Execute()
         {
             // Create a new car with the specified make, model, and year
             Customer customer = new Customer
@@ -35,6 +36,8 @@ namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
         };
             // Add the new car to the car rental system
             CarRentalSystem.Instance.AddCustomer(customer);
+
+            return new Response<int>(customer.Id);
         }
     }
 }

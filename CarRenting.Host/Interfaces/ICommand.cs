@@ -1,7 +1,9 @@
-﻿namespace CarRenting.Host.Interfaces
+﻿using CarRenting.Host.Common;
+
+namespace CarRenting.Host.Interfaces
 {
-    public interface ICommand
+    public interface ICommand<T>
     {
-        void Execute();
+        Response<T> Execute();
     }
 }

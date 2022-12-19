@@ -1,12 +1,13 @@
-﻿using CarRenting.Host.Interfaces;
+﻿using CarRenting.Host.Common;
+using CarRenting.Host.Interfaces;
 
 namespace CarRenting.Host.Executor
 {
-    public static class CommandExecutor
+    public static class CommandExecutor<T>
     {
-        public static void Execute(ICommand command)
+        public static Response<T> Execute(ICommand<T> command)
         {
-            command.Execute();
+            return command.Execute();
         }
     }
 }

@@ -15,41 +15,39 @@ namespace CarRenting.Host.Controllers
     {
 
         [HttpGet("{id}")]
-        public ActionResult<Customer> GetCustomerById(int id)
+        public ActionResult<Response<Customer>> GetCustomerById(int id)
         {
             var customer = CarRentalSystem.Instance.GetCustomers().FirstOrDefault(c => c.Id == id);
             if (customer == null)
             {
-                return NotFound();
+                return new Response<Customer>("Customer not found");
             }
-            return customer;
+            return new Response<Customer>(customer);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Customer>> GetAllCustomers()
+        public ActionResult<Response<IEnumerable<Customer>>> GetAllCustomers()
         {
             var customers = CarRentalSystem.Instance.GetCustomers();
             if (customers == null)
             {
-                return NotFound();
+                return new Response<IEnumerable<Customer>>("Customers not found");
             }
-            return new ActionResult<IEnumerable<Customer>>(customers);
+            return new Response<IEnumerable<Customer>>(customers);
         }
 
         [HttpPost]
-        public ActionResult<string> CreateCustomer([FromBody] CreateCustomerCommand command)
+        public ActionResult<Response<int>> CreateCustomer([FromBody] CreateCustomerCommand command)
         {
 
-            CommandExecutor.Execute(command);
-            return new ActionResult<string>("Successfully created.");
+            return CommandExecutor<int>.Execute(command);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<string> DeleteCustomer(int id)
+        public ActionResult<Response<int>> DeleteCustomer(int id)
         {
             DeleteCustomerByIdCommand command = new DeleteCustomerByIdCommand(id);
-            CommandExecutor.Execute(command);
-            return new ActionResult<string>("Successfully deleted.");
+            return CommandExecutor<int>.Execute(command);
         }
     }
 }

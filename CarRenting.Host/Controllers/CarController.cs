@@ -14,41 +14,39 @@ namespace CarRenting.Host.Controllers
     {
 
         [HttpGet("{id}")]
-        public ActionResult<Car> GetCarById(int id)
+        public ActionResult<Response<Car>> GetCarById(int id)
         {
             var car = CarRentalSystem.Instance.GetCars().FirstOrDefault(c => c.Id == id);
             if (car == null)
             {
-                return NotFound();
+                return new Response<Car>("Car not found");
             }
-            return car;
+            return new Response<Car>(car);
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Car>> GetAllCars()
+        public ActionResult<Response<IEnumerable<Car>>> GetAllCars()
         {
             var cars = CarRentalSystem.Instance.GetCars();
             if (cars == null)
             {
-                return NotFound();
+                return new Response<IEnumerable<Car>>("Cars not found");
             }
-            return new ActionResult<IEnumerable<Car>>(cars);
+            return new Response<IEnumerable<Car>>(cars);
         }
 
         [HttpPost]
-        public ActionResult<string> CreateCar([FromBody] CreateCarCommand command)
+        public ActionResult<Response<int>> CreateCar([FromBody] CreateCarCommand command)
         {
 
-            CommandExecutor.Execute(command);
-            return new ActionResult<string>("Successfully created.");
+            return CommandExecutor<int>.Execute(command);
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<string> DeleteCar(int id)
+        public ActionResult<Response<int>> DeleteCar(int id)
         {
             DeleteCarByIdCommand command = new DeleteCarByIdCommand(id);
-            CommandExecutor.Execute(command);
-            return new ActionResult<string>("Successfully deleted.");
+            return CommandExecutor<int>.Execute(command);
         }
     }
 }
