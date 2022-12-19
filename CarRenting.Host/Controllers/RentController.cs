@@ -3,6 +3,9 @@ using CarRenting.Host.Entities;
 using CarRenting.Host.Executor;
 using CarRenting.Host.Features.Customers.Commands.CreateCustomer;
 using CarRenting.Host.Features.Customers.Commands.DeleteCustomerById;
+using CarRenting.Host.Features.Rents.Commands.RentCar;
+using CarRenting.Host.Features.Rents.Commands.RentCarWithCustomerId;
+using CarRenting.Host.Features.Rents.Commands.ReturnCar;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -36,18 +39,26 @@ namespace CarRenting.Host.Controllers
             return new Response<IEnumerable<RentalAgreement>>(RentalAgreements);
         }
 
-        //[HttpPost]
-        //public ActionResult<Response<int>> CreateRentalAgreement([FromBody] CreateRentalAgreementCommand command)
-        //{
+        [HttpPost("RentCarWithCustomerId")]
+        public ActionResult<Response<RentalAgreement>> RentCarWithCustomerId([FromBody] RentCarWithCustomerIdCommand command)
+        {
 
-        //    return CommandExecutor<int>.Execute(command);
-        //}
+            return CommandExecutor<RentalAgreement>.Execute(command);
+        }
 
-        //[HttpDelete("{id}")]
-        //public ActionResult<Response<int>> DeleteRentalAgreement(int id)
-        //{
-        //    DeleteRentalAgreementByIdCommand command = new DeleteRentalAgreementByIdCommand(id);
-        //    return CommandExecutor<int>.Execute(command);
-        //}
+        [HttpPost("RentCar")]
+        public ActionResult<Response<RentalAgreement>> RentCar([FromBody] RentCarCommand command)
+        {
+
+            return CommandExecutor<RentalAgreement>.Execute(command);
+        }
+
+        [HttpPost("ReturnCar")]
+        public ActionResult<Response<int>> ReturnCar(int rentalId)
+        {
+            ReturnCarCommand returnCarCommand = new ReturnCarCommand(rentalId);
+           return CommandExecutor<int>.Execute(returnCarCommand);
+            
+        }
     }
 }

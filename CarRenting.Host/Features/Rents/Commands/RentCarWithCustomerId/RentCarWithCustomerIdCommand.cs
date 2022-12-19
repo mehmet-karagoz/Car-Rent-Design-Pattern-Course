@@ -4,40 +4,32 @@ using CarRenting.Host.Interfaces;
 using CarRenting.Host.RentalService;
 using Entities;
 
-namespace CarRenting.Host.Features.Rents.Commands.RentCar
+namespace CarRenting.Host.Features.Rents.Commands.RentCarWithCustomerId
 {
-    public class RentCarCommand : ICommand<RentalAgreement>
+    public class RentCarWithCustomerIdCommand : ICommand<RentalAgreement>
     {
         public int CarId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public string Address { get; set; }
+        public int CustomerId { get; set; }
         private readonly CarRentalService carRentalService;
 
-        public RentCarCommand(int carId, DateTime startDate, DateTime endDate, string name, string email, string phone, string address)
+        public RentCarWithCustomerIdCommand(int carId, DateTime startDate, DateTime endDate,int customerId)
         {
             CarId = carId;
             StartDate = startDate;
             EndDate = endDate;
-            Name = name;
-            Email = email;
-            Phone = phone;
-            Address = address;
+            CustomerId = customerId;
             carRentalService = new CarRentalService();
         }
 
         public Response<RentalAgreement> Execute()
         {
-            Customer customer = new Customer
+            Customer? customer = CarRentalSystem.Instance.GetCustomers().Where(c => c.Id == CustomerId).FirstOrDefault();
+            if (customer == null)
             {
-                Name = Name,
-                Email = Email,
-                Phone = Phone,
-                Address = Address
-            };
+                return new Response<RentalAgreement>("Customer not found");
+            }
             try
             {
                 RentalAgreement rentalAgreement = carRentalService.RentCar(CarId, StartDate, EndDate, customer);

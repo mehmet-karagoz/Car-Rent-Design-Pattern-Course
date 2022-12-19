@@ -67,6 +67,11 @@ namespace CarRenting.Host.RentalService
 
                 rentalAgreement.EndDate = date;
             }
+            else
+            {
+                throw new Exception("Rental Agreement is not found");
+            }
+
         }
     }
 }
