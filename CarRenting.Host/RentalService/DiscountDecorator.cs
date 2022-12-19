@@ -32,5 +32,5 @@ namespace CarRenting.Host.RentalService
         {
             _decoratedService.ReturnCar(rentalId);
         }
-        }
+    }
 }

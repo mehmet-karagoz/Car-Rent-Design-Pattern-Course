@@ -1,9 +1,9 @@
 ﻿using CarRenting.Host.Entities;
 using CarRenting.Host.Interfaces;
 
-namespace CarRenting.Host.Features.Vehicles.Commands.CreateCar
+namespace CarRenting.Host.Features.Cars.Commands.CreateCar
 {
-    public  class CreateCarCommand : ICommand
+    public class CreateCarCommand : ICommand
     {
         public string Make { get; set; }
         public string Model { get; set; }

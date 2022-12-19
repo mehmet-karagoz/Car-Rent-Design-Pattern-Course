@@ -1,7 +1,7 @@
 ﻿using CarRenting.Host.Entities;
 using CarRenting.Host.Interfaces;
 
-namespace CarRenting.Host.Features.Vehicles.Commands.DeleteCarById
+namespace CarRenting.Host.Features.Cars.Commands.DeleteCarById
 {
     public class DeleteCarByIdCommand : ICommand
     {

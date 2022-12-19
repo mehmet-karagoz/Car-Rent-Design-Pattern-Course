@@ -1,8 +1,8 @@
 using CarRenting.Host.Common;
 using CarRenting.Host.Entities;
 using CarRenting.Host.Executor;
-using CarRenting.Host.Features.Vehicles.Commands.CreateCar;
-using CarRenting.Host.Features.Vehicles.Commands.DeleteCarById;
+using CarRenting.Host.Features.Cars.Commands.CreateCar;
+using CarRenting.Host.Features.Cars.Commands.DeleteCarById;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -10,11 +10,11 @@ namespace CarRenting.Host.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class CarRentalController : ControllerBase
+    public class CarController : ControllerBase
     {
-      
+
         [HttpGet("{id}")]
-        public ActionResult<Car> GetCar(int id)
+        public ActionResult<Car> GetCarById(int id)
         {
             var car = CarRentalSystem.Instance.GetCars().FirstOrDefault(c => c.Id == id);
             if (car == null)
