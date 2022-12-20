@@ -7,18 +7,18 @@ namespace CarRenting.Host.Features.Rents.Commands.ReturnCar
     public class ReturnCarCommand : ICommand<int>
     {
         public int RentalId { get; set; }
-        private readonly CarRentalService carRentalService;
+        private readonly ICarRentalService _carRentalService;
         public ReturnCarCommand(int rentalId)
         {
             RentalId = rentalId;
-            carRentalService = new CarRentalService();
+            _carRentalService = new CarRentalService();
         }
 
         public Response<int> Execute()
         {
             try
             {
-            carRentalService.ReturnCar(RentalId);
+            _carRentalService.ReturnCar(RentalId);
                 return new Response<int>(RentalId);
 
             }

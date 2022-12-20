@@ -50,9 +50,7 @@ namespace CarRenting.Host.RentalService
                 EndDate = endDate,
                 Customer = customer,
                 DiscountAmount = 0,
-                RentalPrice = 10,
             };
-            _carRentalSystem.AddRentalAgreement(rentalAgreement);
             return rentalAgreement;
         }
 

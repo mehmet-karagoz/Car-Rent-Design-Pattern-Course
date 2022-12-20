@@ -9,14 +9,14 @@ namespace CarRenting.Host.Features.Cars.Commands.CreateCar
         public string Make { get; set; }
         public string Model { get; set; }
         public int Year { get; set; }
-        public int NumberOfDoors { get; set; }
+        public CarType CarType { get; set; }
 
-        public CreateCarCommand(string make, string model, int year, int numberOfDoors)
+        public CreateCarCommand(string make, string model, int year, CarType carType)
         {
             Make = make;
             Model = model;
             Year = year;
-            NumberOfDoors = numberOfDoors;
+            CarType = carType;
         }
 
         public Response<int> Execute()
@@ -29,6 +29,7 @@ namespace CarRenting.Host.Features.Cars.Commands.CreateCar
                 Model = Model,
                 Year = Year,
                 IsAvailable = true,
+                CarType = CarType
             };
             // Add the new car to the car rental system
             CarRentalSystem.Instance.AddCar(car);

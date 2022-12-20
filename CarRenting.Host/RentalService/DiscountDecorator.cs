@@ -6,11 +6,13 @@ namespace CarRenting.Host.RentalService
 {
     public class DiscountDecorator : ICarRentalService
     {
+        private readonly int Discount;
         private readonly ICarRentalService _decoratedService;
 
-        public DiscountDecorator(ICarRentalService decoratedService)
+        public DiscountDecorator(int discount)
         {
-            _decoratedService = decoratedService;
+            _decoratedService = new CarRentalService();
+            Discount = discount;
         }
 
         public List<Car> GetAvailableCars()
@@ -20,11 +22,9 @@ namespace CarRenting.Host.RentalService
 
         public RentalAgreement RentCar(int carId, DateTime startDate, DateTime endDate, Customer customer)
         {
-            // Calculate the discount amount
-            // ...
-            var discountAmount = 2;
+            
             RentalAgreement agreement = _decoratedService.RentCar(carId, startDate, endDate,customer);
-            agreement.DiscountAmount = discountAmount;
+            agreement.DiscountAmount = Discount;
             return agreement;
         }
 

@@ -9,6 +9,7 @@ namespace CarRenting.Host.Entities
         public string Model { get; set; }
         public int Year { get; set; }
         public bool IsAvailable { get; set; }
+        public CarType CarType { get; set; }
 
         public override string? ToString()
         {

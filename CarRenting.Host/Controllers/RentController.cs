@@ -5,6 +5,7 @@ using CarRenting.Host.Features.Customers.Commands.CreateCustomer;
 using CarRenting.Host.Features.Customers.Commands.DeleteCustomerById;
 using CarRenting.Host.Features.Rents.Commands.RentCar;
 using CarRenting.Host.Features.Rents.Commands.RentCarWithCustomerId;
+using CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount;
 using CarRenting.Host.Features.Rents.Commands.ReturnCar;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -53,6 +54,18 @@ namespace CarRenting.Host.Controllers
             return CommandExecutor<RentalAgreement>.Execute(command);
         }
 
+        [HttpPost("RentCarWithDiscount")]
+        public ActionResult<Response<RentalAgreement>> RentCarWithDiscount([FromBody] RentCarWithDiscountCommand command, [FromQuery] int discountAmount)
+        {
+            command.SetDiscountAmount(discountAmount);
+            return CommandExecutor<RentalAgreement>.Execute(command);
+        }
+        [HttpPost("RentCarWithDiscountAndCustomerId")]
+        public ActionResult<Response<RentalAgreement>> RentCarWithDiscountAndCustomerId([FromBody] RentCarWithDiscountAndCustomerIdCommand command, [FromQuery] int discountAmount)
+        {
+            command.SetDiscountAmount(discountAmount);
+            return CommandExecutor<RentalAgreement>.Execute(command);
+        }
         [HttpPost("ReturnCar")]
         public ActionResult<Response<int>> ReturnCar(int rentalId)
         {
