@@ -8,20 +8,23 @@ namespace CarRenting.Host.Features.Customers.Commands.DeleteCustomerById
     public class DeleteCustomerByIdCommand : ICommand<int>
     {
         public int Id { get; set; }
+        private readonly CarRentalSystem _carRentalSystem;
 
         public DeleteCustomerByIdCommand(int id)
         {
             Id = id;
+            _carRentalSystem = CarRentalSystem.Instance;
+
         }
 
         public Response<int> Execute()
         {
-            Customer? customer = CarRentalSystem.Instance.GetCustomers().FirstOrDefault(c => c.Id == Id);
+            Customer? customer = _carRentalSystem.GetCustomers().FirstOrDefault(c => c.Id == Id);
             if (customer == null)
             {
                 return new Response<int>("Customer not found.");
             }
-            CarRentalSystem.Instance.RemoveCustomer(customer);
+            _carRentalSystem.RemoveCustomer(customer);
 
             return new Response<int>(customer.Id);
         }

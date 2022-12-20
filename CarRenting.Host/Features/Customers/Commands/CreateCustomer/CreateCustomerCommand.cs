@@ -14,6 +14,8 @@ namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
+        private readonly CarRentalSystem _carRentalSystem;
+
 
         public CreateCustomerCommand(string name, string email, string phone, string address)
         {
@@ -21,6 +23,8 @@ namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
             Email = email;
             Phone = phone;
             Address = address;
+            _carRentalSystem = CarRentalSystem.Instance;
+
         }
 
         public Response<int> Execute()
@@ -28,14 +32,14 @@ namespace CarRenting.Host.Features.Customers.Commands.CreateCustomer
             // Create a new car with the specified make, model, and year
             Customer customer = new Customer
             {
-                Id = CarRentalSystem.Instance.GetCustomers().Any() ? CarRentalSystem.Instance.GetCustomers().Last().Id + 1 : 0,
+                Id = _carRentalSystem.GetCustomers().Any() ? _carRentalSystem.GetCustomers().Last().Id + 1 : 0,
                 Name = Name,
             Email = Email,
             Phone = Phone,
             Address = Address,
         };
             // Add the new car to the car rental system
-            CarRentalSystem.Instance.AddCustomer(customer);
+            _carRentalSystem.AddCustomer(customer);
 
             return new Response<int>(customer.Id);
         }

@@ -15,6 +15,7 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount
         public int CustomerId { get; set; }
         public CarType CarType { get; set; }
         private readonly IPricingStrategy _pricingStrategy;
+        private readonly CarRentalSystem _carRentalSystem;
 
 
         private ICarRentalService _carRentalService;
@@ -28,6 +29,8 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount
             CustomerId = customerId;
             CarType = carType;
             _pricingStrategy = PricingStrategyFactory.CreatePricingStrategy(carType);
+            _carRentalSystem = CarRentalSystem.Instance;
+
 
         }
         public void SetDiscountAmount(int discountAmount)
@@ -38,7 +41,7 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount
 
         public Response<RentalAgreement> Execute()
         {
-            Customer? customer = CarRentalSystem.Instance.GetCustomers().Where(c => c.Id == CustomerId).FirstOrDefault();
+            Customer? customer = _carRentalSystem.GetCustomers().Where(c => c.Id == CustomerId).FirstOrDefault();
             if (customer == null)
             {
                 return new Response<RentalAgreement>("Customer not found");
@@ -53,7 +56,7 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount
                 int days = (EndDate - StartDate).Days;
                 double rentalPrice = _pricingStrategy.CalculatePrice(days);
                 rentalAgreement.RentalPrice = rentalPrice - (rentalPrice * rentalAgreement.DiscountAmount) / 100;
-                CarRentalSystem.Instance.AddRentalAgreement(rentalAgreement);
+                _carRentalSystem.AddRentalAgreement(rentalAgreement);
                 return new Response<RentalAgreement>(rentalAgreement);
             }
             catch (Exception e)

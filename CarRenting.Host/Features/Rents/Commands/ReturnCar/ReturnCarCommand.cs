@@ -8,9 +8,13 @@ namespace CarRenting.Host.Features.Rents.Commands.ReturnCar
     {
         public int RentalId { get; set; }
         private readonly ICarRentalService _carRentalService;
+        private readonly CarRentalSystem _carRentalSystem;
+
         public ReturnCarCommand(int rentalId)
         {
             RentalId = rentalId;
+            _carRentalSystem = CarRentalSystem.Instance;
+
             _carRentalService = new CarRentalService();
         }
 

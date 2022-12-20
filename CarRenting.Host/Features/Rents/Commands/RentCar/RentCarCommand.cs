@@ -16,12 +16,13 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCar
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Address { get; set; }
-        public CarType CarType { get; set; }
 
         private readonly ICarRentalService _carRentalService;
-        private readonly IPricingStrategy _pricingStrategy;
+        private  IPricingStrategy _pricingStrategy;
+        private readonly CarRentalSystem _carRentalSystem;
 
-        public RentCarCommand(int carId, DateTime startDate, DateTime endDate, string name, string email, string phone, string address, CarType carType)
+
+        public RentCarCommand(int carId, DateTime startDate, DateTime endDate, string name, string email, string phone, string address)
         {
             CarId = carId;
             StartDate = startDate;
@@ -30,9 +31,9 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCar
             Email = email;
             Phone = phone;
             Address = address;
-            CarType = carType;
             _carRentalService = new CarRentalService();
-            _pricingStrategy = PricingStrategyFactory.CreatePricingStrategy(carType);
+            _carRentalSystem = CarRentalSystem.Instance;
+
         }
 
         public Response<RentalAgreement> Execute()
@@ -46,13 +47,16 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCar
             };
             try
             {
+                Car? car = _carRentalSystem.GetCars().Where(c => c.Id == CarId).FirstOrDefault();
+                _pricingStrategy = PricingStrategyFactory.CreatePricingStrategy(car!.CarType);
+
                 RentalAgreement rentalAgreement = _carRentalService.RentCar(CarId, StartDate, EndDate, customer);
                 int days = (EndDate - StartDate).Days;
 
                 double rentalPrice = _pricingStrategy.CalculatePrice(days);
 
                 rentalAgreement.RentalPrice = rentalPrice;
-                CarRentalSystem.Instance.AddRentalAgreement(rentalAgreement);
+                _carRentalSystem.AddRentalAgreement(rentalAgreement);
 
                 return new Response<RentalAgreement>(rentalAgreement);
             }
