@@ -57,6 +57,7 @@ namespace CarRenting.Host.Features.Rents.Commands.RentCarWithDiscount
                 }
                 Car? car = _carRentalSystem.GetCars().Where(c => c.Id == CarId).FirstOrDefault();
                 _pricingStrategy = PricingStrategyFactory.CreatePricingStrategy(car!.CarType);
+                _carRentalSystem.AddCustomer(customer);
                 RentalAgreement rentalAgreement = _carRentalService.RentCar(CarId, StartDate, EndDate, customer);
                 int days = (EndDate - StartDate).Days;
                 double rentalPrice = _pricingStrategy.CalculatePrice(days);
